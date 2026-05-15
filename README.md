@@ -87,7 +87,7 @@ This is a functional baseline, but **DO NOT deploy this directly into production
 
 If you are building an enterprise Hub & Spoke architecture, you cannot afford broken Windows activations or blocked authentication traffic. You need dynamic IP scaling and pre-configured Microsoft service bypasses.
 
-👉 **[Get the Enterprise Firewall Blueprint →](https://woitzik-cloud.lemonsqueezy.com)** The Enterprise Edition is a plug-and-play Terraform module that attaches seamlessly to any existing network. It includes:
+👉 **[Get the Enterprise Firewall Blueprint →](https://woitzik-cloud.lemonsqueezy.com/checkout/buy/a955d698-acf5-4654-ae16-bb8ec1f7be15)** The Enterprise Edition is a plug-and-play Terraform module that attaches seamlessly to any existing network. It includes:
 - **KMS & Azure AD Bypasses:** Pre-built UDR injections to guarantee VMs stay activated and authenticated.
 - **Dynamic IP Groups:** Never hardcode Spoke IPs again; pass variables and let the firewall scale automatically.
 - **FQDN Application Policies:** Pre-configured rule collections for Windows Updates, NTP, and core infrastructure out of the box.
