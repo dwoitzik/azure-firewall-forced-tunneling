@@ -37,7 +37,7 @@ When assigning a Route Table to a Spoke Subnet that points to an Azure Firewall'
 **1. Clone the repository**
 
 ```bash
-git clone [https://github.com/dwoitzik/azure-firewall-forced-tunneling.git](https://github.com/dwoitzik/azure-firewall-forced-tunneling.git)
+git clone https://github.com/dwoitzik/azure-firewall-forced-tunneling.git
 cd azure-firewall-forced-tunneling
 ```
 
@@ -80,6 +80,14 @@ This is a functional baseline, but **DO NOT deploy this directly into production
 - **Windows Activation Failures:** Your VMs will lose their license status because Azure KMS traffic is trapped by the `0.0.0.0/0` route.
 - **Azure AD Lockouts:** Managed Identities and Azure AD login will fail without specific Service Tag bypasses.
 - **Management Nightmare:** This setup lacks IP Groups and FQDN policies, forcing you to manually update hundreds of IP addresses for basic Microsoft updates.
+
+---
+
+## 📖 Deep Dive
+
+Read the full technical breakdown — cycle error root cause, KMS and Azure AD bypass routes, and dynamic IP Group design explained:
+
+**[Azure Firewall Forced Tunneling: Solving the Cycle Error →](https://woitzik.dev/blog/azure-firewall-cycle-error)**
 
 ---
 
