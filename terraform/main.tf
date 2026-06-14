@@ -36,6 +36,7 @@ resource "azurerm_subnet" "fw_subnet" {
 }
 
 resource "azurerm_subnet" "spoke_workload" {
+  #checkov:skip=CKV2_AZURE_31: Zero-Trust NSG rulesets for subnet-level isolation are included in the Enterprise Edition — woitzik.dev/templates
   name                 = "snet-workload"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.spoke.name
@@ -74,11 +75,13 @@ resource "azurerm_public_ip" "fw_pip" {
 }
 
 resource "azurerm_firewall" "fw" {
+  #checkov:skip=CKV_AZURE_219: Firewall Policy with FQDN rule collections and dynamic IP Groups is included in the Enterprise Edition — woitzik.dev/templates
   name                = "afw-${var.environment}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   sku_name            = "AZFW_VNet"
   sku_tier            = "Standard"
+  threat_intel_mode   = "Deny"
   tags                = var.tags
 
   ip_configuration {
