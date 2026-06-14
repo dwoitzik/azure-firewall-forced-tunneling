@@ -1,5 +1,7 @@
 # Azure Firewall: Forced Tunneling (Cycle Error Fix)
 
+[![CI](https://github.com/dwoitzik/azure-firewall-forced-tunneling/actions/workflows/tf-linter.yml/badge.svg)](https://github.com/dwoitzik/azure-firewall-forced-tunneling/actions/workflows/tf-linter.yml)
+
 A minimal, targeted Infrastructure as Code (IaC) template demonstrating how to implement Azure Firewall Forced Tunneling (`0.0.0.0/0`) while completely avoiding the infamous **Terraform Circular Dependency (Cycle Error)**.
 
 When assigning a Route Table to a Spoke Subnet that points to an Azure Firewall's private IP, Terraform often deadlocks because it cannot resolve the dependency graph. This repository provides the clean, functional baseline to break that loop.
