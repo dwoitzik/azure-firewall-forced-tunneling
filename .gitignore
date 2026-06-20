@@ -8,3 +8,6 @@ override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
+
+# Module repo — lock file should not be committed for a reusable module
+**/.terraform.lock.hcl
