@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/dwoitzik/azure-firewall-forced-tunneling/actions/workflows/tf-linter.yml/badge.svg)](https://github.com/dwoitzik/azure-firewall-forced-tunneling/actions/workflows/tf-linter.yml)
 
+> **Status: v0.1.0 — pre-1.0.** CI runs `terraform fmt`, `validate`, and `tflint` on every push, but this has never been through `terraform plan`/`apply` against a real Azure subscription. That proves syntax, not that it works. The multi-spoke `for_each` subnet binding in particular (`terraform/main.tf`, `terraform/routing.tf`) is brand new and has zero real-world runs behind it. Reaching 1.0 needs a real plan-and-apply pass, which needs the operator (an Azure subscription, credentials, and someone watching the apply).
+
 A minimal, targeted Infrastructure as Code (IaC) template demonstrating how to implement Azure Firewall Forced Tunneling (`0.0.0.0/0`) while completely avoiding the infamous **Terraform Circular Dependency (Cycle Error)**.
 
 When assigning a Route Table to a Spoke Subnet that points to an Azure Firewall's private IP, Terraform often deadlocks because it cannot resolve the dependency graph. This repository provides the clean, functional baseline to break that loop.
