@@ -13,7 +13,12 @@ output "firewall_private_ip" {
   value       = azurerm_firewall.fw.ip_configuration[0].private_ip_address
 }
 
+output "firewall_public_ip" {
+  description = "The public IP address of the Azure Firewall."
+  value       = azurerm_public_ip.fw_pip.ip_address
+}
+
 output "route_table_id" {
-  description = "The ID of the Forced Tunneling Route Table."
+  description = "The ID of the Forced Tunneling Route Table (includes the KMS/Azure AD bypasses)."
   value       = azurerm_route_table.spoke_udr.id
 }

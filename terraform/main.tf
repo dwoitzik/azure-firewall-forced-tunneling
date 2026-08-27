@@ -36,11 +36,11 @@ resource "azurerm_subnet" "fw_subnet" {
 }
 
 resource "azurerm_subnet" "spoke_workload" {
-  #checkov:skip=CKV2_AZURE_31: Zero-Trust NSG rulesets for subnet-level isolation are included in the Enterprise Edition — woitzik.dev/templates
-  name                 = "snet-workload"
+  for_each             = var.spoke_subnets
+  name                 = "snet-${each.key}"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.spoke.name
-  address_prefixes     = var.spoke_subnet_cidr
+  address_prefixes     = each.value.address_prefixes
 }
 
 resource "azurerm_virtual_network_peering" "hub_to_spoke" {
@@ -75,13 +75,13 @@ resource "azurerm_public_ip" "fw_pip" {
 }
 
 resource "azurerm_firewall" "fw" {
-  #checkov:skip=CKV_AZURE_219: Firewall Policy with FQDN rule collections and dynamic IP Groups is included in the Enterprise Edition — woitzik.dev/templates
   name                = "afw-${var.environment}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   sku_name            = "AZFW_VNet"
   sku_tier            = "Standard"
   threat_intel_mode   = "Deny"
+  firewall_policy_id  = azurerm_firewall_policy.base_policy.id
   tags                = var.tags
 
   ip_configuration {
@@ -91,26 +91,7 @@ resource "azurerm_firewall" "fw" {
   }
 }
 
-# ==========================================
-# The Loop Breaker: Forced Tunneling Routing
-# ==========================================
-
-resource "azurerm_route_table" "spoke_udr" {
-  name                          = "rt-forced-tunneling-${var.environment}"
-  location                      = azurerm_resource_group.rg.location
-  resource_group_name           = azurerm_resource_group.rg.name
-  bgp_route_propagation_enabled = false
-  tags                          = var.tags
-
-  route {
-    name                   = "to-firewall"
-    address_prefix         = "0.0.0.0/0"
-    next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = azurerm_firewall.fw.ip_configuration[0].private_ip_address
-  }
-}
-
-resource "azurerm_subnet_route_table_association" "spoke_binding" {
-  subnet_id      = azurerm_subnet.spoke_workload.id
-  route_table_id = azurerm_route_table.spoke_udr.id
-}
+# The Loop Breaker: Forced Tunneling Routing lives in routing.tf (it also
+# carries the KMS/Azure AD bypass routes and depends on the firewall's
+# private IP, which is why it's kept as its own file rather than inlined
+# here).
