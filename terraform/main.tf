@@ -36,10 +36,11 @@ resource "azurerm_subnet" "fw_subnet" {
 }
 
 resource "azurerm_subnet" "spoke_workload" {
-  name                 = "snet-workload"
+  for_each             = var.spoke_subnets
+  name                 = "snet-${each.key}"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.spoke.name
-  address_prefixes     = var.spoke_subnet_cidr
+  address_prefixes     = each.value.address_prefixes
 }
 
 resource "azurerm_virtual_network_peering" "hub_to_spoke" {

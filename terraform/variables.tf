@@ -28,10 +28,14 @@ variable "fw_subnet_cidr" {
   default     = ["10.0.1.0/26"]
 }
 
-variable "spoke_subnet_cidr" {
-  type        = list(string)
-  description = "CIDR block for Spoke Workload Subnet"
-  default     = ["10.1.1.0/24"]
+variable "spoke_subnets" {
+  type = map(object({
+    address_prefixes = list(string)
+  }))
+  description = "Workload subnets to create in the Spoke VNet, each bound to the forced-tunneling route table. Keyed by subnet name."
+  default = {
+    workload = { address_prefixes = ["10.1.1.0/24"] }
+  }
 }
 
 variable "environment" {
