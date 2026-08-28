@@ -1,6 +1,6 @@
 # Azure Firewall: Forced Tunneling (Cycle Error Fix)
 
-[![CI](https://github.com/dwoitzik/azure-firewall-forced-tunneling/actions/workflows/tf-linter.yml/badge.svg)](https://github.com/dwoitzik/azure-firewall-forced-tunneling/actions/workflows/tf-linter.yml)
+[![CI](https://github.com/dwoitzik/terraform-azurerm-firewall-forced-tunneling/actions/workflows/tf-linter.yml/badge.svg)](https://github.com/dwoitzik/terraform-azurerm-firewall-forced-tunneling/actions/workflows/tf-linter.yml)
 
 > **Status: v0.1.0 — pre-1.0.** CI runs `terraform fmt`, `validate`, and `tflint` on every push, but this has never been through `terraform plan`/`apply` against a real Azure subscription. That proves syntax, not that it works. The multi-spoke `for_each` subnet binding in particular (`terraform/main.tf`, `terraform/routing.tf`) is brand new and has zero real-world runs behind it. Reaching 1.0 needs a real plan-and-apply pass, which needs the operator (an Azure subscription, credentials, and someone watching the apply).
 
@@ -43,8 +43,8 @@ When assigning a Route Table to a Spoke Subnet that points to an Azure Firewall'
 **1. Clone the repository**
 
 ```bash
-git clone https://github.com/dwoitzik/azure-firewall-forced-tunneling.git
-cd azure-firewall-forced-tunneling
+git clone https://github.com/dwoitzik/terraform-azurerm-firewall-forced-tunneling.git
+cd terraform-azurerm-firewall-forced-tunneling
 ```
 
 **2. Configure your variables**
